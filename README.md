@@ -70,3 +70,7 @@ It will show tasks that you can run with Nx.
 # angular-microfrontends-monorepo
 # angular-microfrontends-monorepo
 # angular-microfrontends-monorepo
+
+
+Add tailwind to project 
+npx nx g @nx/angular:setup-tailwind shell
