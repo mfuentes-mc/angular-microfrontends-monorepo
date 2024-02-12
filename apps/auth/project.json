@@ -7,18 +7,63 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@angular-architects/native-federation:build",
+      "options": {},
+      "configurations": {
+        "production": {
+          "target": "auth:esbuild:production"
+        },
+        "development": {
+          "target": "auth:esbuild:development",
+          "dev": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "auth:serve-original:development",
+        "rebuildDelay": 0,
+        "dev": true,
+        "port": 0
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "auth:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "auth:build"
+      }
+    },
+    "esbuild": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/auth",
         "index": "apps/auth/src/index.html",
-        "main": "apps/auth/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js",
+          "es-module-shims"
+        ],
         "tsConfig": "apps/auth/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/auth/src/favicon.ico", "apps/auth/src/assets"],
-        "styles": ["apps/auth/src/styles.scss"],
-        "scripts": []
+        "assets": [
+          "apps/auth/src/favicon.ico",
+          "apps/auth/src/assets"
+        ],
+        "styles": [
+          "apps/auth/src/styles.scss"
+        ],
+        "scripts": [],
+        "browser": "apps/auth/src/main.ts"
       },
       "configurations": {
         "production": {
@@ -37,9 +82,7 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
@@ -47,28 +90,19 @@
       },
       "defaultConfiguration": "production"
     },
-    "serve": {
+    "serve-original": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "auth:build:production"
+          "buildTarget": "auth:esbuild:production"
         },
         "development": {
-          "buildTarget": "auth:build:development"
+          "buildTarget": "auth:esbuild:development"
         }
       },
-      "defaultConfiguration": "development"
-    },
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "auth:build"
-      }
-    },
-    "serve-static": {
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "auth:build"
+        "port": 4201
       }
     }
   }
