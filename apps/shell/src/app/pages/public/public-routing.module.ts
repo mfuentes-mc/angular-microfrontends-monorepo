@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ContactComponent } from './contact/contact.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { loadRemoteModule } from '@angular-architects/native-federation';
 
 const routes: Routes = [
   {
@@ -19,8 +19,18 @@ const routes: Routes = [
     loadComponent:()=> GalleryComponent
   },
   {
-    path: 'sign-in',
-    loadComponent: ()=> SignInComponent
+    path: 'auth',
+    loadChildren:()=>loadRemoteModule('auth', './AuthModule').then((m) => m.AuthModule).catch((error) => {
+      console.error('Error loading remote module:', error);
+      return import('../../components/not-available/not-available.module').then(m => m.NotAvailableModule); // Componente de fallback en caso de error
+    }),
+  },
+  {
+    path: 'sales',
+    loadChildren:()=>loadRemoteModule('sales', './SalesModule').then((m) => m.SalesModule).catch((error) => {
+      console.error('Error loading remote module:', error);
+      return import('../../components/not-available/not-available.module').then(m => m.NotAvailableModule); // Componente de fallback en caso de error
+    }),
   }
 ];
 

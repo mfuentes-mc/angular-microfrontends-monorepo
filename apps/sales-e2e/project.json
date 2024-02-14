@@ -1,0 +1,26 @@
+{
+  "name": "sales-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/sales-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/sales-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "sales:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "sales:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "sales:serve-static"
+        }
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["sales"]
+}

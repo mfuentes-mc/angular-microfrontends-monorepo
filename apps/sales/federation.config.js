@@ -2,10 +2,10 @@ const { withNativeFederation, shareAll } = require('@angular-architects/native-f
 
 module.exports = withNativeFederation({
 
-  name: 'auth',
+  name: 'sales',
 
   exposes: {
-    './AuthModule': './apps/auth/src/app/pages/auth/auth.module.ts',
+    './SalesModule': './apps/sales/src/app/pages/sales/sales.module.ts',
   },
 
   shared: {
@@ -18,6 +18,6 @@ module.exports = withNativeFederation({
     'rxjs/testing',
     'rxjs/webSocket',
     // Add further packages you don't need at runtime
-  ],
+  ]
   
 });

@@ -74,3 +74,5 @@ It will show tasks that you can run with Nx.
 
 Add tailwind to project 
 npx nx g @nx/angular:setup-tailwind shell
+npx nx g @angular-architects/native-federation:init --project sales --port 4202 --type remote
+npx nx g @angular-architects/native-federation:init --project shell --port 4200 --type dynamic-host
